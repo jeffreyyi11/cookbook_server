@@ -1,7 +1,24 @@
 import { Schema, model } from "mongoose";
-import { UserInterface } from "./type";
 
-const userSchema = new Schema<UserInterface>({
+export interface IUser {
+  username: string;
+  firstName: string;
+  lastName?: string;
+  email: string;
+  passwordHash: string;
+  friends?: [];
+  recipes?: [];
+}
+
+export interface NewUser {
+  username: string;
+  firstName: string;
+  lastName?: string;
+  email: string;
+  password: string;
+}
+
+const userSchema = new Schema<IUser>({
   username: {
     type: String,
     required: true
@@ -12,11 +29,11 @@ const userSchema = new Schema<UserInterface>({
   },
   lastName: {
     type: String,
-    required: true
   },
   email: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   passwordHash: {
     type: String,
@@ -30,7 +47,7 @@ const userSchema = new Schema<UserInterface>({
     type: Schema.Types.ObjectId,
     ref: 'Recipe'
   }
-});
+}, {timestamps: true});
 
 userSchema.set('toJSON', {
   transform: (document, returnedObject) => {

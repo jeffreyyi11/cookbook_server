@@ -4,17 +4,33 @@ import newUserSchema from '../models/user/newUser';
 
 const router = express.Router();
 
-router.get('/', (_req: Request, res: Response) => {
-  const result = userService.getAllUsers();
-  console.log(result);
+router.get('/', async (_req: Request, res: Response) => {
+  const result = await userService.getAllUsers();
   res.status(200).send(result);
 })
 
-router.post('/', (req: Request, res: Response) => {
-  console.log(req.body);
+router.post('/', async (req: Request, res: Response) => {
   const newUser = newUserSchema.parse(req.body);
+  const createduser = await userService.addUser(newUser);
+  
+  res.status(201).send(createduser);
+})
 
-  res.send('adding user');
+router.put('/:id', async (req: Request, res: Response) => {
+  const updatedUser = await userService.updateUser(req.params.id, req.body);
+  res.status(201).send(updatedUser);
+})
+
+router.delete('/:id', async (req: Request, res: Response) => {
+  try {
+    await userService.deleteUser(req.params.id);
+
+    res.sendStatus(204);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error('Error deleting user');
+    }
+  }
 })
 
 export default router;
