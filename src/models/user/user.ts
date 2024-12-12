@@ -1,15 +1,5 @@
 import { Schema, model } from "mongoose";
 
-export interface IUser {
-  username: string;
-  firstName: string;
-  lastName?: string;
-  email: string;
-  passwordHash: string;
-  friends?: [];
-  recipes?: [];
-}
-
 export interface NewUser {
   username: string;
   firstName: string;
@@ -18,10 +8,19 @@ export interface NewUser {
   password: string;
 }
 
+export interface IUser extends NewUser {
+  passwordHash: string;
+  friends?: [];
+  recipes?: [];
+}
+
+export type UserBasic = typeof userSchema;
+
 const userSchema = new Schema<IUser>({
   username: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   firstName: {
     type: String,

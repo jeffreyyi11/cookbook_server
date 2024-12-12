@@ -1,4 +1,18 @@
 import { Schema, model } from "mongoose";
+import { UserBasic } from "../user/user";
+import { IIngredient } from "../ingredients/ingredient";
+
+export interface IRecipe {
+  name: string;
+  ingredients?: IIngredient[];
+  prepTime: string;
+  cookTime: string;
+  createdBy: UserBasic
+}
+
+export interface NewRecipe extends IRecipe {
+
+};
 
 const recipeSchema = new Schema({
   name: {
@@ -22,7 +36,7 @@ const recipeSchema = new Schema({
     required: true,
     ref: 'User'
   }
-})
+}, {timestamps: true})
 
 recipeSchema.set('toJSON', {
   transform: (document, returnedObject) => {
