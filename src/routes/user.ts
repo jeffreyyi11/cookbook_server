@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import userService from '../services/userService';
-import newUserSchema from '../models/user/newUser';
+import newUserSchema from '../models/user/newUserSchema';
 
 const router = express.Router();
 

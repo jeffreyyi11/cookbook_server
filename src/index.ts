@@ -1,9 +1,10 @@
 import express, { Response, Request } from 'express';
 import * as dotenv from 'dotenv';
-import userRouter from './routes/user';
-import recipeRouter from './routes/recipe';
 import cors from 'cors';
 import connectToDb from './lib/mongodb';
+import userRouter from './routes/user';
+import recipeRouter from './routes/recipe';
+import loginRouter from './routes/login';
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.get('/ping', (_req: Request, res: Response) => {
 });
 
 app.use('/api/users', userRouter);
+app.use('/api/login', loginRouter);
 app.use('/api/recipes', recipeRouter);
 
 app.listen(PORT, () => {

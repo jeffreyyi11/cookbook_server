@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import newUserSchema from '../user/newUser';
+import newUserSchema from '../user/newUserSchema';
 
 const newRecipeSchema = z.object({
   name: z.string(),

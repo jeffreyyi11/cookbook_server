@@ -12,9 +12,10 @@ router.get('/', async (_req: Request, res: Response) => {
 
 router.post('/', async (req: Request, res: Response) => {
   const newRecipe = newRecipeSchema.parse(req.body);
-  const result = await recipeService.addRecipe(newRecipe);
+  console.log(newRecipe);
+  // const result = await recipeService.addRecipe(newRecipe);
 
-  res.send(result);
+  res.send('adding recipe');
 })
 
 export default router;
