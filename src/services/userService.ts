@@ -7,12 +7,8 @@ const getAllUsers = async () => {
 }
 
 const addUser = async (newUserObject: NewUser)=> {
-  const salt = await bcrypt.genSalt(10);
-  const passwordHash = await bcrypt.hash(newUserObject.password, salt);
-
   const newUser = new User({
-    ...newUserObject,
-    passwordHash
+    ...newUserObject
   })
 
   try {

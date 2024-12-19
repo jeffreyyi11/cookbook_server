@@ -10,7 +10,6 @@ export interface NewUser {
 }
 
 export interface IUser extends NewUser {
-  passwordHash: string;
   friends?: [];
   recipes?: [];
 }
@@ -35,7 +34,7 @@ const userSchema = new Schema<IUser>({
     required: true,
     unique: true
   },
-  passwordHash: {
+  password: {
     type: String,
     required: true
   },
@@ -49,12 +48,22 @@ const userSchema = new Schema<IUser>({
   }
 }, {timestamps: true});
 
+userSchema.pre('save', async function(next) {
+  const user = this;
+
+  if (user.isModified('password')) {
+    user.password = await bcrypt.hash(user.password, 10);
+  }
+
+  next();
+})
+
 userSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
     delete returnedObject.__v;
-    delete returnedObject.passwordHash;
+    delete returnedObject.password;
   }
 })
 

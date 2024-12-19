@@ -7,7 +7,7 @@ const loginUser = async (loginObject: LoginDetails) => {
   const user = await User.findOne({email: loginObject.email});
   
   try {
-    const correctPassword = user === null ? false : await bcrypt.compare(loginObject.password, user.passwordHash);
+    const correctPassword = user === null ? false : await bcrypt.compare(loginObject.password, user.password);
 
     if (!(user && correctPassword)) {
       throw new Error('Incorrect login');
@@ -19,10 +19,10 @@ const loginUser = async (loginObject: LoginDetails) => {
     }
 
     const token = jwt.sign(userToken, process.env.JWT_SECRET!);
-
     return {token, email: user.email}
   } catch (error: unknown) {
     if (error instanceof Error) {
+      console.log(error);
       throw new Error(`Error: ${error.message}`)
     }
   }
