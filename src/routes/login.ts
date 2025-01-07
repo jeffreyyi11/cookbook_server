@@ -17,7 +17,9 @@ const errorMiddleware = (error: unknown, _req: Request, res: Response, next: Nex
 
 router.post('/', async (req: Request, res: Response) => {
   const loginObject = loginSchema.parse(req.body);
+  console.log(loginObject);
   const loginResponse = await loginService.loginUser(loginObject);
+  console.log(loginResponse);
   res.status(200).send(loginResponse);
 })
 

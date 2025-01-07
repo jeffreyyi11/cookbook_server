@@ -1,5 +1,4 @@
 import User, { IUser, NewUser} from '../models/user/user';
-import bcrypt from 'bcrypt';
 
 const getAllUsers = async () => {
   const result = await User.find({});
@@ -17,6 +16,7 @@ const addUser = async (newUserObject: NewUser)=> {
     return createdUser;
   } catch (error: unknown) {
     if (error instanceof Error) {
+      console.log(error);
       throw new Error(`Error: ${error.message}`);
     }
   }

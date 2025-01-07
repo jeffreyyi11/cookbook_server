@@ -1,7 +1,7 @@
-import { LoginDetails } from "../models/login/login";
-import User from "../models/user/user";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { LoginDetails } from "../models/login/login";
+import User from "../models/user/user";
 
 const loginUser = async (loginObject: LoginDetails) => {
   const user = await User.findOne({email: loginObject.email});

@@ -9,7 +9,7 @@ router.get('/', async (_req: Request, res: Response) => {
   res.status(200).send(result);
 })
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/register', async (req: Request, res: Response) => {
   const newUser = newUserSchema.parse(req.body);
   const createduser = await userService.addUser(newUser);
   
@@ -25,7 +25,7 @@ router.delete('/:id', async (req: Request, res: Response) => {
   try {
     await userService.deleteUser(req.params.id);
 
-    res.sendStatus(204);
+    res.status(204).json({message: 'User Deleted'});
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw new Error('Error deleting user');
